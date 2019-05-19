@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+	<meta charset="UTF-8">
+	<title>Test</title>
+</head>
+<body>
+	진동수 : <input type="text" id="f"/>
+	온도 : <input type="text" id="t"/><br>
+	y0:<input type="text" class="y0"><input type="text" class="y0"><input type="text" class="y0"><input type="text" class="y0"><input type="text" class="y0"><br>
+	y1:<input type="text" class="y1"><input type="text" class="y1"><input type="text" class="y1"><input type="text" class="y1"><input type="text" class="y1"><br>
+
+	<input type="button" id="hw" value="Calc" />
+
+	<hr>
+	파장 : <textarea id="fResult"></textarea><br>
+	음속 VT : <textarea id="VTResult"></textarea><br>
+	음속 실험값 : <textarea id="VTTest"></textarea><br>
+	오차율 : <textarea id="OCha"></textarea><br>
+    
+</body>
+<script type="text/javascript">
+
+    var hw = document.getElementById('hw');
+    hw.addEventListener('click', function(){
+        
+	var f = parseFloat(document.getElementById("f").value);
+	var t = parseFloat(document.getElementById("t").value);
+	var y0 = document.getElementsByClassName("y0");
+	var y1 = document.getElementsByClassName("y1");
+	var y0avg = 0.0;
+	var y1avg = 0.0;
+
+	for (var i = y0.length - 1; i >= 0; i--) {
+		y0avg = y0avg + parseFloat(y0[i].value);
+		y1avg = y1avg + parseFloat(y1[i].value);
+	}
+	y0avg=y0avg/5;
+	y1avg=y1avg/5;
+
+		var fr = 2*(y1avg - y0avg)/100;
+		var vt = fr*f;
+		var n = Math.sqrt(1.0+t/273);
+		document.getElementById("fResult").value = fr;
+		document.getElementById("VTResult").value = vt;
+		document.getElementById("VTTest").value = vt/n;
+		document.getElementById("OCha").value = (331.45-vt/n)/33145*10000;
+    })
+</script>
+</html>
