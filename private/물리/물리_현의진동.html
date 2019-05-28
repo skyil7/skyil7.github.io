@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+	<meta charset="UTF-8">
+	<title>Test</title>
+</head>
+<body>
+	현의 선밀도 : <input type="text" id="mil"/>
+	Melde장치의 진동수 : <input type="text" id="f"/><br>
+	추+추걸이 질량 : <input type="text" id="cM"/><br>
+	배의 수 n : <input type="text" class="n"/><input type="text" class="n"/><input type="text" class="n"/><br>
+	현의 길이 : <input type="text" class="l"/><input type="text" class="l"/><input type="text" class="l"/><br>
+	진동이 현에 평행한가?(Y/N) : <input type="text" id="check"><br>
+
+	<input type="button" id="hw" value="Calc" />
+
+	<hr>
+	현의 파장/측정된 진동수 f<br>
+	TestCase #1 : <textarea id="lambdaA"></textarea><textarea id="testFA"></textarea><br>
+	TestCase #2 : <textarea id="lambdaB"></textarea><textarea id="testFB"></textarea><br>
+	TestCase #3 : <textarea id="lambdaC"></textarea><textarea id="testFC"></textarea><br>
+	측정된 진동수 평균 : <textarea id="avg"></textarea><br>
+	오차율 : <textarea id="OCha"></textarea><br>
+    
+</body>
+<script type="text/javascript">
+
+    var hw = document.getElementById('hw');
+    hw.addEventListener('click', function(){
+        
+	var mil = parseFloat(document.getElementById("mil").value);
+	var f = parseFloat(document.getElementById("f").value);
+	var cM = parseFloat(document.getElementById("cM").value);
+	var v = cM*9.8/mil;
+	var n = document.getElementsByClassName("n");
+	var l = document.getElementsByClassName("l");
+	var lambda=new Array();
+	var testF=new Array();
+	var sum = 0;
+
+	if(document.getElementById("check").value=='Y')
+	{
+		for(var i = 0;i<3;i++)
+		{
+			lambda[i] = 2*parseFloat(l[i].value)/parseFloat(n[i].value);
+			testF[i]=2/lambda*Math.sqrt(v);
+			sum+=testF[i];
+		}
+		document.getElementById("lambdaA").value=lambda[0];
+		document.getElementById("lambdaB").value=lambda[1];
+		document.getElementById("lambdaC").value=lambda[2];
+		document.getElementById("testFA").value=testF[0];
+		document.getElementById("testFB").value=testF[1];
+		document.getElementById("testFC").value=testF[2];
+		document.getElementById("avg").value=sum/3;
+		document.getElementById("OCha").value=(f-sum/3)/f*100;
+	}else{
+		for(var i = 0;i<3;i++)
+		{
+			lambda[i] = 2*parseFloat(l[i].value)/parseFloat(n[i].value);
+			testF[i] = 1/lambda[i]*Math.sqrt(v);
+			sum+=testF[i];
+		}
+		document.getElementById("lambdaA").value=lambda[0];
+		document.getElementById("lambdaB").value=lambda[1];
+		document.getElementById("lambdaC").value=lambda[2];
+		document.getElementById("testFA").value=testF[0];
+		document.getElementById("testFB").value=testF[1];
+		document.getElementById("testFC").value=testF[2];
+		document.getElementById("avg").value=sum/3;
+		document.getElementById("OCha").value=(f-sum/3)/f*100;
+	}
+    })
+</script>
+</html>
