@@ -43,7 +43,7 @@
 		for(var i = 0;i<3;i++)
 		{
 			lambda[i] = 2*parseFloat(l[i].value)/parseFloat(n[i].value);
-			testF[i]=2/lambda*Math.sqrt(v);
+			testF[i]=2/lambda[i]*Math.sqrt(v);
 			sum+=testF[i];
 		}
 		document.getElementById("lambdaA").value=lambda[0];
